@@ -37,21 +37,34 @@ def main():
 
 
     # Get the designation for tomorrow.
-    designation = days[str(tomorrow.strftime('%d'))]
+    designation = str.lower(str(days[str(tomorrow.strftime('%d'))]))
 
     # Select the rate table and periods for tomorrow's date and designation.
     for season in RATES:
-        if tomorrow >= dt.datetime.strptime(season['date_start'], '%Y-%m-%d') \
-            and tomorrow <= dt.datetime.strptime(season['date_end'], '%Y-%m-%d'):
-            rate_table = season['designation'][designation]
-            periods = season['periods']
+        if tomorrow >= RATES[season]['date_start'] \
+            and tomorrow <= RATES[season]['date_end']:
+            rate_table = RATES[season]['designation'][designation]
+            periods = RATES[season]['periods']
             break
 
     # Combine the rate table and periods.
-    print rate_table
-    print periods
+    combined = []
+    for id in periods:
+        tmp = {}
+        tmp['start'] = periods[id]['start']
+        tmp['end'] = periods[id]['end']
+        tmp['rate'] = rate_table[id]
+        combined.append(tmp)
+
+    # Add a header stanza.
+    output = {}
+    output['meta'] = {}
+    output['meta']['generated'] = time.strftime('%Y-%m-%dT%H:%M:%S')
+    output['date'] = tomorrow.strftime('%Y-%m-%d')
+    output['schedule'] = combined
 
     # Send the result to stdout
+    print json.dumps(output)
 
 if __name__ == "__main__":
     main()
