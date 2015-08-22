@@ -1,7 +1,7 @@
 summer:
-  date_start: 04-16
-  date_end: 10-15
-  classifications:
+  date_start: 2015-04-16
+  date_end: 2015-10-15
+  designation:
     a:
       periods:
         1: 0.093
@@ -40,9 +40,9 @@ summer:
       start: 22:00:01
       end: 00:00:00
 winter:
-  date_start: 10-16
-  date_end: 04-15
-  classifications:
+  date_start: 201510-16
+  date_end: 2016-04-15
+  designation:
     a:
       periods:
         1: 0.117
