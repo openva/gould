@@ -21,9 +21,11 @@ def main():
     # Get tomorrow's year, month (spelled out), and date (not left-padded).
     tomorrow = dt.date.today() + dt.timedelta(days=1)
 
-    # Retrieve the JSON for this month
-    url = 'https://www.dom.com/api/smart-pricing/years/' \
-        + str(tomorrow.strftime('%Y')) + '/months/' \
+    # Retrieve the JSON for this month.
+    # Yes, we've hard-coded "2015," because Dominion has done the same. See
+    # https://github.com/openva/gould/issues/2 for details.
+    url = 'https://www.dom.com/api/smart-pricing/years/2015' \
+        + '/months/' \
         + str(tomorrow.strftime('%B'))
     response = urllib.urlopen(url)
     calendar = json.loads(response.read())
@@ -34,8 +36,7 @@ def main():
         for day in week['days']:
             if day['designation'] != None:
                 days[day['day']] = day['designation']
-
-
+    
     # Get the designation for tomorrow.
     designation = str.lower(str(days[str(tomorrow.strftime('%d'))]))
 
@@ -60,6 +61,9 @@ def main():
     output = {}
     output['meta'] = {}
     output['meta']['generated'] = time.strftime('%Y-%m-%dT%H:%M:%S')
+    output['meta']['provider'] = 'Dominion'
+    output['meta']['state'] = 'VA'
+    output['meta']['documentation'] = 'https://github.com/openva/gould/'
     output['date'] = tomorrow.strftime('%Y-%m-%d')
     output['schedule'] = combined
 
