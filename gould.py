@@ -38,7 +38,7 @@ def main():
                 days[day['day']] = day['designation']
     
     # Get the designation for tomorrow.
-    designation = str.lower(str(days[str(tomorrow.strftime('%d'))]))
+    designation = str.lower(str(days[str(tomorrow.strftime('%-d'))]))
 
     # Select the rate table and periods for tomorrow's date and designation.
     for season in RATES:
