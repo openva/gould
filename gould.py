@@ -24,8 +24,9 @@ def main():
     # Retrieve the JSON for this month.
     # Yes, we've hard-coded "2015," because Dominion has done the same. See
     # https://github.com/openva/gould/issues/2 for details.
-    url = 'https://www.dom.com/api/smart-pricing/years/2015' \
-        + '/months/' \
+    url = 'https://www.dominionenergy.com/api/smartpricing/getmonth?year=' \
+        + str(tomorrow.strftime('%Y')) \
+        + '&monthname=' \
         + str(tomorrow.strftime('%B'))
     response = urllib.urlopen(url)
     calendar = json.loads(response.read())
